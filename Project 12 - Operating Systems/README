@@ -1,0 +1,28 @@
+shaharbirzon, yuval_lev
+===============================================================================
+Shahar Birzon, ID 206899049, shahar.birzon@mail.huji.ac.il
+Yuval Lev, ID 205734288, yuval.lev@mail.huji.ac.il
+===============================================================================
+
+               project 12 -  Operating System
+			  --------------------------------------------
+
+Submitted Files
+---------------
+README - this file. 
+The operating system classes:
+Array.jack
+Keyboard.jack
+Math.jack
+Memory.jack
+Output.jack
+Screen.jack
+String.jack
+Sys.jack
+
+
+Remarks
+-------
+In this project we Implement the Jack OS specified in Chapter 12.
+There are eight OS classes: Memory, Array, Math, String, Screen, 
+Keyboard and Sys.

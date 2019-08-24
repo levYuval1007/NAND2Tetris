@@ -1,0 +1,234 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Screen.jack
+
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 512 rows (indexed 0..511, top to bottom)
+ * of 256 pixels each (indexed 0..255, left to right). The top left pixel on 
+ * the screen is indexed (0,0).
+ */
+class Screen {
+        static Array arr;
+        static Array screen;
+        static boolean color;
+
+    /** Initializes the Screen. */
+    function void init() {
+       let arr = Array.new(16);
+       let arr[0] = 1;
+       let arr[1] = 2;
+       let arr[2] = 4;
+       let arr[3] = 8;
+       let arr[4] = 16;
+       let arr[5] = 32;
+       let arr[6] = 64;
+       let arr[7] = 128;
+       let arr[8] = 256;
+       let arr[9] = 512;
+       let arr[10] = 1024;
+       let arr[11] = 2048;
+       let arr[12] = 4096;
+       let arr[13] = 8192;
+       let arr[14] = 16384;
+       let arr[15] = 16384 + 16384;
+       let color = true;
+       let screen = 16384;
+       return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+        var int i;
+        let i = 0;
+        while (i < 8192){
+            let screen[i] = false;
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Sets the current color, to be used for all subsequent drawXXX commands.
+     *  Black is represented by true, white by false. */
+    function void setColor(boolean b) {
+        let color = b;
+        return;
+    }
+
+    /** Draws the (x,yMult / 32) pixel, using the current color. */
+    function void drawPixelBetter(int x, int yMult) { // receive the pixel y coordinate multiply by 32
+        var int address, value, bit, notBit , division;
+        let division = x / 16;
+        let address = yMult + (division);
+        let value = screen[address];
+        let bit = (x & 15);
+        if (color){
+            let screen[address] = value | arr[bit];
+        }
+        else{
+            let notBit = ~arr[bit];
+            let screen[address] = notBit & value;
+        }
+        return;
+    }
+    function void drawPixel(int x, int y) {
+        var int yMult;
+        let yMult= y*32;
+        do Screen.drawPixelBetter(x, yMult);
+        return;
+    }
+
+    function void drawHorizontalByPixel(int minX,int maxX,int yMult) // receive the pixel y coordinate multiply by 32
+    {
+        var int diffX, i;
+        let diffX = maxX - minX;
+        let i=0;
+        while (~(i > diffX)){
+                do Screen.drawPixelBetter(i + minX, yMult);
+                let  i = i + 1;
+           }
+        return;
+    }
+    function void drawHorizontalLine(int minX,int maxX, int yMult){
+        var int divX1 ,divX2 , numOfReg,firstReg,i,val;
+        if(color){
+            let val= -1;
+        }
+        else{
+            let val = 0;
+        }
+        let divX1 = minX / 16;
+        let divX2 = maxX / 16;
+        if (~(divX2-divX1>1)){
+            do Screen.drawHorizontalByPixel(minX, maxX, yMult);
+            return;
+        }
+        do Screen.drawHorizontalByPixel(minX, (16*divX1)+15, yMult);
+        do Screen.drawHorizontalByPixel(divX2*16, maxX, yMult);
+        let numOfReg=(divX2-divX1)-1;
+        let firstReg = yMult + (divX1+1);
+        let i=0;
+        while(i<numOfReg){
+            let screen[firstReg+i] = val;
+            let i=i+1;
+        }
+        return;
+    }
+
+    function void drawHorizontalLineSquare(int minX, int maxX, int yMult, int divX1, int divX2){ // in case if this line
+        // is part of a square
+        var int numOfReg,firstReg,i,val;
+        if(color){
+            let val= -1;
+        }
+        else{
+            let val = 0;
+        }
+        if (~(divX2-divX1>1)){
+            do Screen.drawHorizontalByPixel(minX, maxX, yMult);
+            return;
+        }
+        do Screen.drawHorizontalByPixel(minX, (16*divX1)+15, yMult);
+        do Screen.drawHorizontalByPixel(divX2*16, maxX, yMult);
+        let numOfReg = (divX2-divX1) - 1;
+        let firstReg = yMult + (divX1+1);
+        let i=0;
+        while(i < numOfReg){
+            let screen[firstReg+i] = val;
+            let i = i + 1;
+        }
+        return;
+    }
+    /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        var int minX, minY, maxX, maxY, i, diffX, diffY, yMult;
+        var int j, diff, dx, dy, downLine;
+        let i = 0;
+        let minX = Math.min(x1, x2);
+        let minY = Math.min(y1, y2);
+        let maxX = x1 + x2 - minX;
+        let maxY = y1 + y2 - minY;
+        let diffY = maxY - minY;
+        let diffX = maxX - minX;
+        let yMult = minY * 32;
+        if (y1 = y2){
+            do Screen.drawHorizontalLine(minX,maxX, yMult);
+        }
+        else{
+            if (x1 = x2){
+                while (~(i > diffY)){
+                    do Screen.drawPixelBetter(x1, yMult);
+                    let  i = i + 1;
+                    let yMult = yMult+32;
+                }
+            }
+            else{
+                 let j = 0;
+                 let diff = 0;
+                 if(x1 > x2){
+                    let dx=-1;
+                 }
+                 else{
+                    let dx=1;
+                 }
+                 if(y1 > y2){
+                    let dy=-1;
+                 }
+                 else{
+                    let dy=1;
+                 }
+                 while((~(Math.abs(i) > diffX)) & (~(Math.abs(j) > diffY))){
+                    do Screen.drawPixel(x1 + i,y1 + j);
+                    if(diff < 0){
+                        let i = i + dx;
+                        let diff = diff + diffY;
+                    }
+                    else{
+                        let j = j + dy;
+                        let diff = diff - diffX;
+                    }
+                 }
+            }
+
+        }
+        return;
+
+    }
+
+    /** Draws a filled rectangle whose top left corner is (x1, y1)
+     * and bottom right corner is (x2,y2), using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        var int i, diff, minY, progress, yMult, divX1, divX2, minX;
+        let minY = Math.min(y1, y2);
+        let diff  = Math.abs(y1 - y2);
+        let i = 0;
+        let minX = Math.min(x1,x2);
+        let divX1 = minX / 16 ;
+        let divX2 = ((x1+x2) - minX) / 16 ;
+        let yMult= minY * 32;
+        while (~(i > diff)){
+            //let progress = minY+i;
+            do Screen.drawHorizontalLineSquare(x1 , x2, yMult , divX1, divX2);
+            let i = i + 1;
+            let yMult = yMult + 32;
+        }
+        return;
+    }
+
+    /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    function void drawCircle(int x, int y, int r) {
+        var int dy, dyr, squareRad;
+        if(r > 181){
+        let r = 181;
+        }
+        let dy = -r;
+        let squareRad = r * r;
+         while(~(dy > r)){
+            let dyr = Math.sqrt((squareRad) - (dy * dy));
+            do Screen.drawLine(x - dyr, y + dy, x + dyr, y + dy);
+            let dy = dy + 1;
+         }
+         return;
+    }
+}

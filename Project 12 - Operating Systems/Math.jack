@@ -1,0 +1,212 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+    static Array arr;
+    /** Initializes the library. */
+    function void init() {
+        var int i;
+        let arr = Array.new(17);
+        let i = 1;
+        let arr[0] = 1;
+        let arr[1] = 2;
+        let arr[2] = 4;
+        let arr[3] = 8;
+        let arr[4] = 16;
+        let arr[5] = 32;
+        let arr[6] = 64;
+        let arr[7] = 128;
+        let arr[8] = 256;
+        let arr[9] = 512;
+        let arr[10] = 1024;
+        let arr[11] = 2048;
+        let arr[12] = 4096;
+        let arr[13] = 8192;
+        let arr[14] = 16384;
+        let arr[15] = arr[14] + arr[14];
+        let arr[16] = arr[15] + arr[15];
+     return;
+    }
+
+
+    function boolean bit ( int x, int bit){
+        if(((bit < 0)|(bit > 15))){
+        return false;
+      }
+      return x & arr[bit];
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x > 0){
+            return x;
+        }
+        return (-x);
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+        var int i, sum;
+        let i = 0;
+        let sum = 0;
+
+        while (i < 16){
+            if (y & arr[i]){
+                let sum = sum + x;
+            }
+            let i = i + 1;
+            let x = x + x;
+        }
+        return sum;
+    }
+    /**function int multiply(int x, int y) {
+        var int sum;
+        let sum = 0;
+        if (y & arr[0]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[1]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[2]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[3]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[4]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[5]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[6]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[7]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[8]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[9]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[10]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[11]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[12]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[13]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[14]){
+                let sum = sum + x;
+        }
+        let x = x + x;
+        if (y & arr[15]){
+                let sum = sum + x;
+        }
+        return sum;
+    }*/
+
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divideHelper(int x , int y ){
+        var int q , q_2 ; // q_2 = 2 * q
+        if((y > x) | (y < 0)){
+            return 0;
+        }
+        let q = Math.divideHelper(x, y + y);
+        let q_2 = q + q;
+        if(x-(q_2 * y) < y){
+            return q_2;
+        }
+        return q_2 + 1;
+    }
+
+    function int divide (int x, int y){
+        var int sign , result;
+        var boolean sign;
+        let sign = false;
+        if ( x<0 )
+        {
+            let sign = ~sign;
+            let x = -x;
+        }
+        if ( y<0 )
+        {
+            let sign = ~sign;
+            let y = -y;
+        }
+        let result = Math.divideHelper(x, y);
+        if (sign){
+            let result = -result;
+        }
+        return result;
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int i, y, temp, res;
+        let y = 0;
+        let i = 7; //n=16,(n/2)=8,2^(n/2)-1=8-1=7
+        while(~(i<0)){
+            let res = y + arr[i];
+            let temp = (res) * (res);
+            if((~(temp > x) & (temp > 0))){
+                let y = res;
+            }
+            let i = i-1;
+      }
+      return y;
+
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if (a > b){
+            return a;
+        }
+        return b;
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if (a < b){
+            return a;
+        }
+        return b;
+    }
+}

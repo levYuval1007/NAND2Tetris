@@ -1,0 +1,28 @@
+shaharbirzon, yuval_lev
+===============================================================================
+Shahar Birzon, ID 206899049, shahar.birzon@mail.huji.ac.il
+Yuval Lev, ID 205734288, yuval.lev@mail.huji.ac.il
+===============================================================================
+
+               project 11 -  Compiler II - Code Generation
+			  --------------------------------------------
+
+Submitted Files
+---------------
+README - this file.
+JackTokenizer.py - contains the class which is responsible for parsing a given 
+jack code file and tokenize it.
+CompilationEngine.py - contains the class which is responsible for 
+compiling tokens and writing to an output vm file.
+Main.py - contains the main method. Receiving a path from the user and
+constructing all relevant objects in order to translate the given 
+file/files. 
+VMWriter.py - writing vm code
+SymbolTable.py - generating a symbol table for class/subroutine
+Makefile - executes the JackAnalyzer file
+JackAnalayzer - executes all python files.
+
+Remarks
+-------
+In this project we complete the construction of the Jack Compiler that
+we started building in the previous project.

@@ -1,0 +1,31 @@
+/** this class is creating a game object and running the game */
+
+class Main{
+    function void main(){
+
+        var boolean continueGame;  // run another game or exit
+        var char key;
+        var Game game;
+        let continueGame = true;
+        while(continueGame){
+            do Screen.clearScreen();
+            let game = Game.new();
+            do game.run();
+            do game.dispose();
+            do Output.moveCursor(22,17);
+            do Output.printString("NEW GAME - 1     EXIT - 0 ");
+            let key = Keyboard.keyPressed();
+            while((~(key = 48)) & (~(key = 49))){  // press 1 for new game or 0
+             //to exit.
+               let key = Keyboard.keyPressed();
+            }
+            if(key = 48){
+                let continueGame = false;
+            }
+        }
+        return;
+    }
+
+
+
+}

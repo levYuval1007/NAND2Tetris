@@ -1,0 +1,28 @@
+/** Random number class **/
+class Random {
+
+    static int start;
+
+	/** returns random number in the range of 0 and range */
+    function int randRange(int range) {
+        var int dif, result;
+        let dif = 1;
+        while (dif < range) {
+            let dif = dif * 2 + 1;
+        }
+        let result = Random.randNum() & dif;
+        while (result > range) {
+            let result = Random.randNum() & dif;
+        }
+        return result;
+    }
+
+	/** returns a random number in the range 0 and 32767(max number) */
+	function int randNum() {
+        let start = start + 20251;
+        if (start < 0) {
+            let start = start - 32767 - 1;
+        }
+        return start;
+    }
+}

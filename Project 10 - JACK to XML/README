@@ -1,0 +1,29 @@
+shaharbirzon, yuval_lev
+===============================================================================
+Shahar Birzon, ID 206899049, shahar.birzon@mail.huji.ac.il
+Yuval Lev, ID 205734288, yuval.lev@mail.huji.ac.il
+===============================================================================
+
+               project 10 -  Compiler I - Syntax Analysis
+			  --------------------------------------------
+
+Submitted Files
+---------------
+README - this file.
+JackTokenizer.py - contains the class which is responsible for parsing a given 
+jack code file and tokenize it.
+CompilationEngine.py - contains the class which is responsible for 
+classifing tokens and writing to an output xml file.
+Main.py - contains the main method. Receiving a path from the user and
+constructing all relevant objects in order to translate the given 
+file/files. 
+Makefile - executes the JackAnalyzer file
+JackAnalayzer - executes all python files.
+
+Remarks
+-------
+In this project we build a syntax analyzer that parses Jack programs
+according to the Jack grammar, producing an XML file that renders the
+program's structure using marked-up text. In the next project, the 
+logic that generates the XML output will be morphed into logic that
+generates VM code.

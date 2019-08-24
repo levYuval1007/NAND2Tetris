@@ -1,0 +1,27 @@
+shaharbirzon, yuval_lev
+===============================================================================
+Shahar Birzon, ID 206899049, shahar.birzon@mail.huji.ac.il
+Yuval Lev, ID 205734288, yuval.lev@mail.huji.ac.il
+===============================================================================
+
+          project 9 - High Level Programming - Learn Blind Typing
+		-----------------------------------------------------------
+
+Submitted Files
+---------------
+README - this file.
+Letter.jack - this file contains the Letter class.
+Game.jack - contains the Game class.
+Main.jack - contains the Main class and the main method
+Random.jack - contains the random class
+
+Remarks
+-------
+Our game is a program that helps you practice your blind typing skills. 
+The game goes as follows:
+letters are falling from above, and your aim is to press the keybord letters
+which presented on the screen before they reach to the bottom of the screen.
+You can increase or decrease the speed with the down and up arrows, 
+according to your abilities.
+At the end, you can choose to start a new game by pressing 1, or exit by pressing 0.
+Have fun!
