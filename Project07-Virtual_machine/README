@@ -1,0 +1,27 @@
+shaharbirzon, yuval_lev
+===============================================================================
+Shahar Birzon, ID 206899049, shahar.birzon@mail.huji.ac.il
+Yuval Lev, ID 205734288, yuval.lev@mail.huji.ac.il
+===============================================================================
+
+                  Project 7 - Virtual Machine (Arithmetic)
+				-------------------------------------------
+
+Submitted Files
+---------------
+README - this file.
+Parser.py - contains the class which is responsible for parsing a given 
+vm code file.
+Codewriter.py - contains the class which is responsible for translating
+the code and writing the translated code to an output asm file.
+Main.py - contains the main method. Receiving a path from the user and
+constructing all relevant objects in order to translate the given 
+file/files. 
+Makefile - executes the VMTranslator file
+VMTranslator - executes all python files.
+
+Remarks
+-------
+in this project, we build a basic VM translator, focusing on the
+implementation of the VM language's stack arithmetic and memory
+access commands.
